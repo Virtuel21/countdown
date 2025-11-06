@@ -1,8 +1,266 @@
-<style> .snrs-item { border-radius: 20px; cursor: pointer; margin: auto; position: relative; } .snrs-button { background-color: white; border-radius: 10px; position: absolute; bottom: 8%; right: 5%; color: #96154a; border-radius: 50px; overflow: hidden; display: flex; align-items: center; gap: unset; background-color: #fff; padding: 18px 90px; text-decoration: none; font-weight: 700; font-size: 25px !important; font-family: roboto, sans-serif; text-wrap: nowrap; } .snrs-button img { max-width: 20px !important; max-height: 20px !important; min-width: initial !important; min-height: initial !important; } .snrs-carousel { max-width: calc(100% - 40px); overflow: hidden; margin: 20px auto; } .snrs-carousel .slick-dots { display: flex !important; display: -webkit-box; display: -moz-box; display: -ms-flexbox; display: -webkit-flex; justify-content: center; align-items: center; padding-top: 15px; padding-bottom: 10px; } .snrs-carousel .slick-dots li { width: 15.79px; height: 15.947px; color: transparent; margin: 5px; border-radius: 50px; box-shadow: 0 0 18px -2px #000; cursor: pointer; background: #fff; transition: .3s ease-in-out; background: white; } .snrs-carousel .slick-dots li.slick-active { box-shadow: 0 0 18px 2px #000; background: grey; } .snrs-carousel .slick-track { display: flex; } .snrs-item-img-mobile { display: none !important; } .snrs-item-img-desktop { width: 100%; max-width: initial !important; border-radius: 20px !important; } @media only screen and (max-width: 768px) { .snrs-item-img-mobile { display: block !important; width: 100%; } .snrs-carousel { max-width: 100%; overflow: hidden; margin: auto; } .snrs-item-img-desktop { display: none; } .snrs-button img { display: none; } } @media only screen and (max-width: 1008px) { .snrs-button { width: 144px; display: flex; justify-content: center; font-size: 14px !important; height: 32px; } } </style>
+<style>
+  .snrs-item {
+    border-radius: 20px;
+    cursor: pointer;
+    margin: auto;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .snrs-button {
+    background-color: white;
+    border-radius: 10px;
+    position: absolute;
+    bottom: 8%;
+    right: 5%;
+    color: #96154a;
+    border-radius: 50px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    gap: unset;
+    background-color: #fff;
+    padding: 18px 90px;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 25px !important;
+    font-family: roboto, sans-serif;
+    text-wrap: nowrap;
+    z-index: 3;
+  }
+
+  .snrs-button img {
+    max-width: 20px !important;
+    max-height: 20px !important;
+    min-width: initial !important;
+    min-height: initial !important;
+  }
+
+  .snrs-carousel {
+    max-width: calc(100% - 40px);
+    overflow: hidden;
+    margin: 20px auto;
+  }
+
+  .snrs-carousel .slick-dots {
+    display: flex !important;
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 15px;
+    padding-bottom: 10px;
+  }
+
+  .snrs-carousel .slick-dots li {
+    width: 15.79px;
+    height: 15.947px;
+    color: transparent;
+    margin: 5px;
+    border-radius: 50px;
+    box-shadow: 0 0 18px -2px #000;
+    cursor: pointer;
+    background: #fff;
+    transition: .3s ease-in-out;
+    background: white;
+  }
+
+  .snrs-carousel .slick-dots li.slick-active {
+    box-shadow: 0 0 18px 2px #000;
+    background: grey;
+  }
+
+  .snrs-carousel .slick-track {
+    display: flex;
+  }
+
+  .snrs-item-img-mobile {
+    display: none !important;
+  }
+
+  .snrs-item-img-desktop {
+    width: 100%;
+    max-width: initial !important;
+    border-radius: 20px !important;
+    display: block;
+  }
+
+  .snrs-countdown-wrapper {
+    position: absolute;
+    top: 24px;
+    left: 24px;
+    right: 24px;
+    pointer-events: none;
+    z-index: 2;
+    display: flex;
+    justify-content: flex-start;
+  }
+
+  .snrs-countdown {
+    background: linear-gradient(135deg, #96154a 0%, #701c45 100%);
+    padding: 20px 28px;
+    border-radius: 20px;
+    box-shadow: 0 10px 40px rgba(150, 21, 74, 0.4), 0 0 120px rgba(255, 192, 5, 0.2);
+    border: 3px solid #FFC005;
+    display: inline-flex;
+    flex-direction: column;
+    gap: 16px;
+    pointer-events: auto;
+    position: relative;
+    overflow: hidden;
+    min-width: 260px;
+    backdrop-filter: blur(10px);
+  }
+
+  .snrs-countdown::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(45deg, transparent, rgba(255, 192, 5, 0.15), transparent);
+    transform: rotate(45deg);
+    animation: snrs-countdown-shine 3s ease-in-out infinite;
+  }
+
+  @keyframes snrs-countdown-shine {
+    0% {
+      transform: translateX(-100%) translateY(-100%) rotate(45deg);
+    }
+
+    100% {
+      transform: translateX(100%) translateY(100%) rotate(45deg);
+    }
+  }
+
+  .snrs-countdown-header {
+    position: relative;
+    text-align: center;
+    z-index: 1;
+  }
+
+  .snrs-countdown-title {
+    color: #FFC005;
+    font-size: 16px;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin: 0 0 6px 0;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.35);
+  }
+
+  .snrs-countdown-subtitle {
+    color: #fff;
+    font-size: 14px;
+    font-weight: 500;
+    margin: 0;
+    opacity: 0.95;
+  }
+
+  .snrs-countdown-timer {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    z-index: 1;
+  }
+
+  .snrs-countdown-block {
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 14px;
+    padding: 12px 16px;
+    min-width: 60px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-transform: uppercase;
+  }
+
+  .snrs-countdown-number {
+    font-size: 24px;
+    font-weight: 800;
+    color: #fff;
+    line-height: 1;
+    letter-spacing: 1px;
+  }
+
+  .snrs-countdown-label {
+    font-size: 11px;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.85);
+    margin-top: 6px;
+    letter-spacing: 1px;
+  }
+
+  @media only screen and (max-width: 768px) {
+    .snrs-item-img-mobile {
+      display: block !important;
+      width: 100%;
+    }
+
+    .snrs-carousel {
+      max-width: 100%;
+      overflow: hidden;
+      margin: auto;
+    }
+
+    .snrs-item-img-desktop {
+      display: none;
+    }
+
+    .snrs-button img {
+      display: none;
+    }
+
+    .snrs-countdown-wrapper {
+      position: absolute;
+      top: 16px;
+      left: 16px;
+      right: 16px;
+      justify-content: center;
+    }
+
+    .snrs-countdown {
+      width: 100%;
+      padding: 16px 20px;
+      border-radius: 16px;
+      gap: 12px;
+    }
+
+    .snrs-countdown-timer {
+      gap: 8px;
+    }
+
+    .snrs-countdown-block {
+      padding: 10px 12px;
+      min-width: 0;
+      flex: 1;
+    }
+
+    .snrs-countdown-number {
+      font-size: 20px;
+    }
+  }
+
+  @media only screen and (max-width: 1008px) {
+    .snrs-button {
+      width: 144px;
+      display: flex;
+      justify-content: center;
+      font-size: 14px !important;
+      height: 32px;
+      padding: 12px 24px;
+    }
+  }
+</style>
+
 <div class="snrs-carousel">
   <!-- Slide 1 (structure is the same as the first slide) -->
-      <div class="snrs-item" id="snrs-slide-1">
-    
+  <div class="snrs-item" id="snrs-slide-1">
+
       <img
     alt="Retirez vos colis en moins de 6h pour tenter de gagner 1 voyage en Laponie et de nombreux lots !"
     src="https://upload.snrcdn.net/089654187a7f3816659495cc1fcb80a7356a4069/default/origin/adda597c746f43d1a8587055f446a628.png"
@@ -13,6 +271,32 @@
     src="https://upload.snrcdn.net/089654187a7f3816659495cc1fcb80a7356a4069/default/origin/9854c513e6cf496cbbd58a9988fbe867.png"
     class="snrs-item-img-mobile"
     />
+    <div class="snrs-countdown-wrapper">
+      <div class="snrs-countdown" data-countdown-end="2024-12-31T23:59:59+01:00">
+        <div class="snrs-countdown-header">
+          <p class="snrs-countdown-title">Fin de l'offre dans</p>
+          <p class="snrs-countdown-subtitle">Retirez vos colis en moins de 6h</p>
+        </div>
+        <div class="snrs-countdown-timer" aria-live="polite">
+          <div class="snrs-countdown-block">
+            <span class="snrs-countdown-number" data-days>00</span>
+            <span class="snrs-countdown-label">Jours</span>
+          </div>
+          <div class="snrs-countdown-block">
+            <span class="snrs-countdown-number" data-hours>00</span>
+            <span class="snrs-countdown-label">Heures</span>
+          </div>
+          <div class="snrs-countdown-block">
+            <span class="snrs-countdown-number" data-minutes>00</span>
+            <span class="snrs-countdown-label">Minutes</span>
+          </div>
+          <div class="snrs-countdown-block">
+            <span class="snrs-countdown-number" data-seconds>00</span>
+            <span class="snrs-countdown-label">Secondes</span>
+          </div>
+        </div>
+      </div>
+    </div>
     <!-- Button for user action -->
       <div class="snrs-button">
         Je fonce<img
@@ -24,7 +308,7 @@
   <!-- END of Slide 1 -->
   <!-- Slide 2 (structure is the same as the first slide) -->
   <div class="snrs-item" id="snrs-slide-2">
-    
+
       <img
     alt="Soutenez Les Petits Frères des Pauvres en envoyant gratuitement vos créations tricotées"
     src="https://upload.snrcdn.net/089654187a7f3816659495cc1fcb80a7356a4069/default/origin/071679018eaa455e9f8a31fa3606d2b7.png"
@@ -35,6 +319,32 @@
     src="https://upload.snrcdn.net/089654187a7f3816659495cc1fcb80a7356a4069/default/origin/16d097437d234a5fba06753a25899bbc.png"
     class="snrs-item-img-mobile"
     />
+    <div class="snrs-countdown-wrapper">
+      <div class="snrs-countdown" data-countdown-end="2025-01-15T18:00:00+01:00">
+        <div class="snrs-countdown-header">
+          <p class="snrs-countdown-title">Fin de la collecte dans</p>
+          <p class="snrs-countdown-subtitle">Soutenez les Petits Frères des Pauvres</p>
+        </div>
+        <div class="snrs-countdown-timer" aria-live="polite">
+          <div class="snrs-countdown-block">
+            <span class="snrs-countdown-number" data-days>00</span>
+            <span class="snrs-countdown-label">Jours</span>
+          </div>
+          <div class="snrs-countdown-block">
+            <span class="snrs-countdown-number" data-hours>00</span>
+            <span class="snrs-countdown-label">Heures</span>
+          </div>
+          <div class="snrs-countdown-block">
+            <span class="snrs-countdown-number" data-minutes>00</span>
+            <span class="snrs-countdown-label">Minutes</span>
+          </div>
+          <div class="snrs-countdown-block">
+            <span class="snrs-countdown-number" data-seconds>00</span>
+            <span class="snrs-countdown-label">Secondes</span>
+          </div>
+        </div>
+      </div>
+    </div>
     <!-- Button for user action -->
       <div class="snrs-button">
         Je participe<img
@@ -111,6 +421,101 @@
         setTimeout(() => {
             window.location.href = link
         }, 100)
+    }
+
+    function initializeCountdowns() {
+        const countdowns = document.querySelectorAll('.snrs-countdown[data-countdown-end]');
+
+        if (!countdowns.length) {
+            return;
+        }
+
+        countdowns.forEach((countdown) => {
+            const endDateAttribute = countdown.getAttribute('data-countdown-end');
+            if (!endDateAttribute) {
+                setCountdownInactive(countdown);
+                return;
+            }
+
+            const existingInterval = countdown.dataset.intervalId;
+            if (existingInterval) {
+                window.clearInterval(Number(existingInterval));
+                delete countdown.dataset.intervalId;
+            }
+
+            const endDate = new Date(endDateAttribute);
+            if (Number.isNaN(endDate.getTime())) {
+                setCountdownInactive(countdown);
+                return;
+            }
+
+            const updateCountdown = () => {
+                const now = Date.now();
+                const distance = endDate.getTime() - now;
+
+                if (distance <= 0) {
+                    setCountdownInactive(countdown);
+                    return false;
+                }
+
+                const totalSeconds = Math.floor(distance / 1000);
+                const days = Math.floor(totalSeconds / 86400);
+                const hours = Math.floor((totalSeconds % 86400) / 3600);
+                const minutes = Math.floor((totalSeconds % 3600) / 60);
+                const seconds = totalSeconds % 60;
+
+                setCountdownValues(countdown, { days, hours, minutes, seconds });
+                return true;
+            };
+
+            setCountdownValues(countdown, { days: 0, hours: 0, minutes: 0, seconds: 0 });
+
+            if (updateCountdown()) {
+                const intervalId = window.setInterval(() => {
+                    if (!updateCountdown()) {
+                        window.clearInterval(intervalId);
+                    }
+                }, 1000);
+
+                countdown.dataset.intervalId = String(intervalId);
+            }
+        });
+    }
+
+    function setCountdownValues(countdown, values) {
+        const units = {
+            days: '[data-days]',
+            hours: '[data-hours]',
+            minutes: '[data-minutes]',
+            seconds: '[data-seconds]'
+        };
+
+        Object.keys(units).forEach((unit) => {
+            const element = countdown.querySelector(units[unit]);
+            if (!element) {
+                return;
+            }
+
+            const rawValue = values[unit];
+            const safeValue = Number.isFinite(rawValue) ? Math.max(0, rawValue) : 0;
+            element.textContent = String(safeValue).padStart(2, '0');
+        });
+    }
+
+    function setCountdownInactive(countdown) {
+        setCountdownValues(countdown, { days: 0, hours: 0, minutes: 0, seconds: 0 });
+
+        const intervalId = countdown.dataset.intervalId;
+        if (intervalId) {
+            window.clearInterval(Number(intervalId));
+            delete countdown.dataset.intervalId;
+        }
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initializeCountdowns, { once: true });
+    } else {
+        initializeCountdowns();
     }
 })();
 
