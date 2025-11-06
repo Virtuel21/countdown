@@ -409,61 +409,76 @@
 <script>
 (() => {
     // === SLICK CAROUSEL (code existant) ===
-    (function (i) { "use strict"; "function" == typeof define && define.amd ? define(["jquery"], i) : "undefined" != typeof exports ? module.exports = i(require("jquery")) : i(jQuery) })(function (i) {
-        "use strict"; i.fn.slick = function () { var e, t, o = this, s = 0, n = Date.now(); return e = { slicked: !1 }, t = s++, e.options = { dots: !1, infinite: !0, speed: 300, slidesToShow: 1, slidesToScroll: 1, autoplay: !0, autoplaySpeed: 3e3, arrows: !0, prevArrow: '<button type="button" class="slick-prev">Previous</button>', nextArrow: '<button type="button" class="slick-next">Next</button>' }, o.each(function (o, s) { e.$slider = i(s), e.$slider.addClass("slick-slider"), e.$slides = e.$slider.children(), e.slideCount = e.$slides.length, e.currentSlide = 0, e.$slider.attr("id") || e.$slider.attr("id", "slick-" + n + "-" + t), e.$slider.find(".slick-slide").each(function (e, t) { i(t).attr("data-slick-index", e) }); var a = e.$slider.find(".slick-slide:not(.slick-cloned)"); e.$slides = a, e.slideCount = e.$slides.length; var r = function () { e.$slider.trigger("afterChange", [e, e.currentSlide]) }, l = function () { e.$slider.trigger("beforeChange", [e, e.currentSlide, e.currentSlide]) }; e.changeSlide = function (t) { var o = e.currentSlide; l(), e.currentSlide = t, e.$slides.removeClass("slick-active"), e.$slides.eq(e.currentSlide).addClass("slick-active"), e.options.dots && (e.$dots.find("li").removeClass("slick-active"), e.$dots.find("li").eq(e.currentSlide).addClass("slick-active")), r() }, e.init = function () { e.options = i.extend({}, t, e.$slider.data()); var o = e.$slider.children().clone(); e.$slider.empty(), e.$slider.append('<div class="slick-list"><div class="slick-track"></div></div>'); var s = e.$slider.find(".slick-track"); o.each(function (e, t) { s.append(t) }), e.$slides = s.children(".slick-slide"), e.slideCount = e.$slides.length, e.$slides.each(function (e, t) { i(t).attr("data-slick-index", e) }), e.$slides.eq(e.currentSlide).addClass("slick-active"), e.options.dots && (e.$slider.append('<ul class="slick-dots"></ul>'), e.$dots = e.$slider.find(".slick-dots"), e.$slides.each(function (t) { e.$dots.append('<li><button type="button">' + (t + 1) + "</button></li>") }), e.$dots.find("li").eq(e.currentSlide).addClass("slick-active"), e.$dots.on("click", "li", function () { var t = i(this).index(); e.currentSlide !== t && e.changeSlide(t) })), e.options.arrows && (e.$prevArrow = i(e.options.prevArrow).addClass("slick-arrow"), e.$nextArrow = i(e.options.nextArrow).addClass("slick-arrow"), e.$slider.append(e.$prevArrow), e.$slider.append(e.$nextArrow), e.$prevArrow.on("click", function () { var i = e.currentSlide - 1; i < 0 && (i = e.slideCount - 1), e.changeSlide(i) }), e.$nextArrow.on("click", function () { var i = e.currentSlide + 1; i >= e.slideCount && (i = 0), e.changeSlide(i) })), e.options.autoplay && (e.autoPlay = function () { e.autoPlayTimer = setInterval(function () { var i = e.currentSlide + 1; i >= e.slideCount && (i = 0), e.changeSlide(i) }, e.options.autoplaySpeed) }, e.autoPlay()), e.slicked = !0 }, e.init() }), o }
-    });
-    
+    const hasJQuery = typeof window !== 'undefined' && typeof window.jQuery !== 'undefined';
     let isDragging = false;
-    
-    $('.snrs-carousel')
-    .slick({
-        dots: true,
-        nav: false,
-        infinite: true,
-        arrows: false,
-        speed: 300,
-        autoplay: true,
-        autoplaySpeed: 5000,
-        slidesToShow: 1,
-        slidesToScroll: 1,
-    })
-    .on('beforeChange', function () {
-        isDragging = true;
-    })
-    .on('afterChange', function () {
-        setTimeout(function () {
-            isDragging = false;
-        }, 0);
-    })
-    .on('click', '#snrs-slide-1', function (e) {
-        if (isDragging) {
-            e.preventDefault();
-            return false;
-        } else {
-            console.log('clicked');
-            sendClickEvent('baner_1', 'https://mondialrelay.qualifioapp.com/quiz/1685844_2975/6H-FONCEZGAGNEZ.html?utm_source=web&utm_medium=banner&utm_campaign=6H-FONCEZGAGNEZ')
-        }
-    })
-    .on('click', '#snrs-slide-2', function (e) {
-        if (isDragging) {
-            e.preventDefault();
-            return false;
-        } else {
-            console.log('clicked');
-            sendClickEvent('baner_2', 'https://www.mondialrelay.fr/mr/qui-sommes-nous/decouvrez-la-responsabilite-sociale-societale-de-notre-entreprise')
-        }
-    });
-    
+
+    if (hasJQuery) {
+        (function (i) { "use strict"; "function" == typeof define && define.amd ? define(["jquery"], i) : "undefined" != typeof exports ? module.exports = i(require("jquery")) : i(jQuery) })(function (i) {
+            "use strict"; i.fn.slick = function () { var e, t, o = this, s = 0, n = Date.now(); return e = { slicked: !1 }, t = s++, e.options = { dots: !1, infinite: !0, speed: 300, slidesToShow: 1, slidesToScroll: 1, autoplay: !0, autoplaySpeed: 3e3, arrows: !0, prevArrow: '<button type="button" class="slick-prev">Previous</button>', nextArrow: '<button type="button" class="slick-next">Next</button>' }, o.each(function (o, s) { e.$slider = i(s), e.$slider.addClass("slick-slider"), e.$slides = e.$slider.children(), e.slideCount = e.$slides.length, e.currentSlide = 0, e.$slider.attr("id") || e.$slider.attr("id", "slick-" + n + "-" + t), e.$slider.find(".slick-slide").each(function (e, t) { i(t).attr("data-slick-index", e) }); var a = e.$slider.find(".slick-slide:not(.slick-cloned)"); e.$slides = a, e.slideCount = e.$slides.length; var r = function () { e.$slider.trigger("afterChange", [e, e.currentSlide]) }, l = function () { e.$slider.trigger("beforeChange", [e, e.currentSlide, e.currentSlide]) }; e.changeSlide = function (t) { var o = e.currentSlide; l(), e.currentSlide = t, e.$slides.removeClass("slick-active"), e.$slides.eq(e.currentSlide).addClass("slick-active"), e.options.dots && (e.$dots.find("li").removeClass("slick-active"), e.$dots.find("li").eq(e.currentSlide).addClass("slick-active")), r() }, e.init = function () { e.options = i.extend({}, t, e.$slider.data()); var o = e.$slider.children().clone(); e.$slider.empty(), e.$slider.append('<div class="slick-list"><div class="slick-track"></div></div>'); var s = e.$slider.find(".slick-track"); o.each(function (e, t) { s.append(t) }), e.$slides = s.children(".slick-slide"), e.slideCount = e.$slides.length, e.$slides.each(function (e, t) { i(t).attr("data-slick-index", e) }), e.$slides.eq(e.currentSlide).addClass("slick-active"), e.options.dots && (e.$slider.append('<ul class="slick-dots"></ul>'), e.$dots = e.$slider.find(".slick-dots"), e.$slides.each(function (t) { e.$dots.append('<li><button type="button">' + (t + 1) + "</button></li>") }), e.$dots.find("li").eq(e.currentSlide).addClass("slick-active"), e.$dots.on("click", "li", function () { var t = i(this).index(); e.currentSlide !== t && e.changeSlide(t) })), e.options.arrows && (e.$prevArrow = i(e.options.prevArrow).addClass("slick-arrow"), e.$nextArrow = i(e.options.nextArrow).addClass("slick-arrow"), e.$slider.append(e.$prevArrow), e.$slider.append(e.$nextArrow), e.$prevArrow.on("click", function () { var i = e.currentSlide - 1; i < 0 && (i = e.slideCount - 1), e.changeSlide(i) }), e.$nextArrow.on("click", function () { var i = e.currentSlide + 1; i >= e.slideCount && (i = 0), e.changeSlide(i) })), e.options.autoplay && (e.autoPlay = function () { e.autoPlayTimer = setInterval(function () { var i = e.currentSlide + 1; i >= e.slideCount && (i = 0), e.changeSlide(i) }, e.options.autoplaySpeed) }, e.autoPlay()), e.slicked = !0 }, e.init() }), o }
+        });
+
+        window.jQuery('.snrs-carousel')
+            .slick({
+                dots: true,
+                nav: false,
+                infinite: true,
+                arrows: false,
+                speed: 300,
+                autoplay: true,
+                autoplaySpeed: 5000,
+                slidesToShow: 1,
+                slidesToScroll: 1,
+            })
+            .on('beforeChange', function () {
+                isDragging = true;
+            })
+            .on('afterChange', function () {
+                setTimeout(function () {
+                    isDragging = false;
+                }, 0);
+            })
+            .on('click', '#snrs-slide-1', function (e) {
+                if (isDragging) {
+                    e.preventDefault();
+                    return false;
+                } else {
+                    console.log('clicked');
+                    sendClickEvent('baner_1', 'https://mondialrelay.qualifioapp.com/quiz/1685844_2975/6H-FONCEZGAGNEZ.html?utm_source=web&utm_medium=banner&utm_campaign=6H-FONCEZGAGNEZ');
+                }
+            })
+            .on('click', '#snrs-slide-2', function (e) {
+                if (isDragging) {
+                    e.preventDefault();
+                    return false;
+                } else {
+                    console.log('clicked');
+                    sendClickEvent('baner_2', 'https://www.mondialrelay.fr/mr/qui-sommes-nous/decouvrez-la-responsabilite-sociale-societale-de-notre-entreprise');
+                }
+            });
+    } else {
+        console.warn('jQuery is not available. The carousel interactions are disabled, but the countdown remains active.');
+    }
+
     function sendClickEvent(baner, link){
-        SR.event.trackCustomEvent('dynamicContent.click', {
-            'location': window.location.href,
-            'id': '5cae7b22-a540-400a-b2ba-900144d0dc77',
-            'title': `[Carousel][homepage] ${baner}`,
-            'device': SyneriseTC.os.mobile ? 'mobile' : 'desktop',
-        })
+        const canTrack = typeof window !== 'undefined'
+            && typeof window.SR !== 'undefined'
+            && window.SR.event
+            && typeof window.SR.event.trackCustomEvent === 'function'
+            && typeof window.SyneriseTC !== 'undefined'
+            && window.SyneriseTC.os;
+
+        if (canTrack) {
+            window.SR.event.trackCustomEvent('dynamicContent.click', {
+                location: window.location.href,
+                id: '5cae7b22-a540-400a-b2ba-900144d0dc77',
+                title: `[Carousel][homepage] ${baner}`,
+                device: window.SyneriseTC.os.mobile ? 'mobile' : 'desktop',
+            });
+        }
+
         setTimeout(() => {
-            window.location.href = link
-        }, 100)
+            window.location.href = link;
+        }, 100);
     }
     
     // === NOUVEAU : FONCTION COUNTDOWN ===
