@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Countdown - Mondial Relay</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            font-family: 'Roboto', Arial, sans-serif;
+            background: #f0f0f0;
+        }
+        
+        .test-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+        }
+        
+        h1 {
+            color: #96154a;
+            text-align: center;
+        }
+        
+        .test-banner {
+            position: relative;
+            background: linear-gradient(135deg, #96154a 0%, #701c45 100%);
+            border-radius: 20px;
+            height: 400px;
+            margin: 20px 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        /* Styles du countdown (identiques à la version complète) */
+        .snrs-countdown-wrapper {
+            position: relative;
+            z-index: 5;
+        }
+        
+        .snrs-countdown {
+            background: linear-gradient(135deg, #96154a 0%, #701c45 100%);
+            padding: 25px 35px;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(150, 21, 74, 0.4), 0 0 120px rgba(255, 192, 5, 0.2);
+            border: 3px solid #FFC005;
+            position: relative;
+            overflow: hidden;
+            animation: pulse-glow 2s ease-in-out infinite;
+        }
+        
+        @keyframes pulse-glow {
+            0%, 100% {
+                box-shadow: 0 10px 40px rgba(150, 21, 74, 0.4), 0 0 120px rgba(255, 192, 5, 0.2);
+            }
+            50% {
+                box-shadow: 0 15px 60px rgba(150, 21, 74, 0.6), 0 0 150px rgba(255, 192, 5, 0.35);
+            }
+        }
+        
+        .snrs-countdown::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255, 192, 5, 0.1), transparent);
+            transform: rotate(45deg);
+            animation: shine 3s ease-in-out infinite;
+        }
+        
+        @keyframes shine {
+            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+        }
+        
+        .snrs-countdown-header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        .snrs-countdown-title {
+            color: #FFC005;
+            font-size: 18px;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin: 0 0 5px 0;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            animation: flash 1.5s ease-in-out infinite;
+        }
+        
+        @keyframes flash {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.8; }
+        }
+        
+        .snrs-countdown-subtitle {
+            color: #fff;
+            font-size: 14px;
+            font-weight: 500;
+            margin: 0;
+            opacity: 0.95;
+        }
+        
+        .snrs-countdown-timer {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+        
+        .snrs-countdown-block {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            padding: 12px 15px;
+            min-width: 65px;
+            border: 1px solid rgba(255, 192, 5, 0.3);
+            position: relative;
+        }
+        
+        .snrs-countdown-block::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80%;
+            height: 2px;
+            background: #FFC005;
+            box-shadow: 0 2px 10px rgba(255, 192, 5, 0.5);
+        }
+        
+        .snrs-countdown-number {
+            display: block;
+            color: #fff;
+            font-size: 32px;
+            font-weight: 900;
+            line-height: 1;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        .snrs-countdown-label {
+            display: block;
+            color: #FFC005;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            margin-top: 5px;
+            letter-spacing: 1px;
+        }
+        
+        .debug-info {
+            margin-top: 30px;
+            padding: 15px;
+            background: #f8f8f8;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+        }
+        
+        .debug-info h3 {
+            margin-top: 0;
+            color: #333;
+        }
+        
+        .debug-info pre {
+            background: #fff;
+            padding: 10px;
+            border-radius: 3px;
+            overflow-x: auto;
+        }
+        
+        .status {
+            padding: 5px 10px;
+            border-radius: 3px;
+            font-weight: bold;
+            display: inline-block;
+            margin: 5px 0;
+        }
+        
+        .status.success {
+            background: #d4edda;
+            color: #155724;
+        }
+        
+        .status.error {
+            background: #f8d7da;
+            color: #721c24;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1>🔬 Test du Countdown - Mondial Relay</h1>
+        
+        <div class="test-banner">
+            <div class="snrs-countdown-wrapper">
+                <div class="snrs-countdown" data-countdown-end="2025-12-06 23:59:59">
+                    <div class="snrs-countdown-header">
+                        <h3 class="snrs-countdown-title">🔥 VENTE FLASH 🔥</h3>
+                        <p class="snrs-countdown-subtitle">L'offre se termine dans</p>
+                    </div>
+                    <div class="snrs-countdown-timer">
+                        <div class="snrs-countdown-block">
+                            <span class="snrs-countdown-number" data-days>00</span>
+                            <span class="snrs-countdown-label">Jours</span>
+                        </div>
+                        <div class="snrs-countdown-block">
+                            <span class="snrs-countdown-number" data-hours>00</span>
+                            <span class="snrs-countdown-label">Heures</span>
+                        </div>
+                        <div class="snrs-countdown-block">
+                            <span class="snrs-countdown-number" data-minutes>00</span>
+                            <span class="snrs-countdown-label">Minutes</span>
+                        </div>
+                        <div class="snrs-countdown-block">
+                            <span class="snrs-countdown-number" data-seconds>00</span>
+                            <span class="snrs-countdown-label">Secondes</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="debug-info">
+            <h3>🐛 Informations de débogage</h3>
+            <div id="debug-output">
+                <p><span class="status">Chargement...</span></p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Fonction de débogage
+        function debugLog(message, type = 'info') {
+            console.log(message);
+            const debugDiv = document.getElementById('debug-output');
+            const statusClass = type === 'success' ? 'success' : type === 'error' ? 'error' : '';
+            debugDiv.innerHTML += `<p><span class="status ${statusClass}">${type.toUpperCase()}</span> ${message}</p>`;
+        }
+        
+        // Clear initial loading message
+        document.getElementById('debug-output').innerHTML = '';
+        
+        // Fonction pour initialiser le countdown
+        function initializeCountdown() {
+            debugLog('🚀 Début de l\'initialisation du countdown', 'info');
+            
+            // Fonction pour mettre à jour un countdown
+            function updateCountdown(countdownElement) {
+                const endDateStr = countdownElement.getAttribute('data-countdown-end');
+                if (!endDateStr) {
+                    debugLog('❌ Attribut data-countdown-end manquant', 'error');
+                    return;
+                }
+                
+                debugLog(`📅 Date de fin trouvée: ${endDateStr}`, 'info');
+                
+                const endDate = new Date(endDateStr).getTime();
+                const now = new Date().getTime();
+                const distance = endDate - now;
+                
+                // Sélectionner les éléments
+                const daysEl = countdownElement.querySelector('[data-days]');
+                const hoursEl = countdownElement.querySelector('[data-hours]');
+                const minutesEl = countdownElement.querySelector('[data-minutes]');
+                const secondsEl = countdownElement.querySelector('[data-seconds]');
+                
+                if (!daysEl || !hoursEl || !minutesEl || !secondsEl) {
+                    debugLog('❌ Éléments du countdown non trouvés', 'error');
+                    return;
+                }
+                
+                if (distance < 0) {
+                    // Countdown terminé
+                    daysEl.textContent = '00';
+                    hoursEl.textContent = '00';
+                    minutesEl.textContent = '00';
+                    secondsEl.textContent = '00';
+                    debugLog('⏰ Countdown terminé', 'error');
+                    return false;
+                }
+                
+                // Calculer les unités de temps
+                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+                
+                // Mettre à jour l'affichage
+                daysEl.textContent = String(days).padStart(2, '0');
+                hoursEl.textContent = String(hours).padStart(2, '0');
+                minutesEl.textContent = String(minutes).padStart(2, '0');
+                secondsEl.textContent = String(seconds).padStart(2, '0');
+                
+                return true;
+            }
+            
+            // Trouver tous les countdowns
+            const countdowns = document.querySelectorAll('.snrs-countdown[data-countdown-end]');
+            debugLog(`🔍 Nombre de countdowns trouvés: ${countdowns.length}`, countdowns.length > 0 ? 'success' : 'error');
+            
+            if (countdowns.length === 0) {
+                debugLog('❌ Aucun countdown trouvé avec le sélecteur .snrs-countdown[data-countdown-end]', 'error');
+                return;
+            }
+            
+            // Initialiser chaque countdown
+            countdowns.forEach((countdown, index) => {
+                debugLog(`✅ Initialisation du countdown ${index + 1}`, 'success');
+                
+                // Première mise à jour immédiate
+                const isActive = updateCountdown(countdown);
+                
+                if (isActive) {
+                    debugLog(`⏱️ Timer actif - Mise à jour chaque seconde`, 'success');
+                    // Mettre à jour chaque seconde
+                    setInterval(() => {
+                        updateCountdown(countdown);
+                    }, 1000);
+                }
+            });
+            
+            // Afficher l'heure actuelle et la date de fin
+            const now = new Date();
+            const endDate = new Date('2025-12-06 23:59:59');
+            debugLog(`🕐 Heure actuelle: ${now.toLocaleString('fr-FR')}`, 'info');
+            debugLog(`🎯 Date de fin: ${endDate.toLocaleString('fr-FR')}`, 'info');
+            debugLog(`⏳ Temps restant: ${Math.floor((endDate - now) / (1000 * 60 * 60 * 24))} jours`, 'success');
+        }
+        
+        // Lancer l'initialisation immédiatement
+        debugLog('📄 DOM State: ' + document.readyState, 'info');
+        
+        if (document.readyState === 'loading') {
+            debugLog('⏳ Attente du chargement du DOM...', 'info');
+            document.addEventListener('DOMContentLoaded', initializeCountdown);
+        } else {
+            debugLog('✅ DOM déjà chargé, initialisation immédiate', 'success');
+            initializeCountdown();
+        }
+        
+        // Test supplémentaire après un court délai
+        setTimeout(function() {
+            const countdownNumbers = document.querySelectorAll('.snrs-countdown-number');
+            let hasValues = false;
+            countdownNumbers.forEach(el => {
+                if (el.textContent !== '00') hasValues = true;
+            });
+            
+            if (hasValues) {
+                debugLog('🎉 SUCCÈS: Le countdown fonctionne correctement!', 'success');
+            } else {
+                debugLog('⚠️ Les valeurs du countdown sont toujours à 00', 'error');
+            }
+        }, 2000);
+    </script>
+</body>
+</html>
